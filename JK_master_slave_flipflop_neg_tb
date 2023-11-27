@@ -1,0 +1,65 @@
+///100 Days of RTL///
+
+///Abilash P///
+
+///JK Flipflop with master slave condition///
+
+module jk_master_slave_flipflop_tb();
+  
+reg J,K, CLK;
+wire x, y, Q, QBAR;
+
+  jk_master_slave_flipflop dut(.CLK(CLK), .J(J), .K(K),.x(x), .y(y), .Q(Q), .QBAR(QBAR));
+  
+initial 
+ begin
+  CLK=1;
+  forever #10 CLK = ~CLK;  
+ end 
+  
+  
+initial 
+  begin 
+    $display("Verification of 00 conditon");
+    J= 0; K= 0;
+    #20;
+    $display("------------------------------");
+    
+    $display("Verification of 10 conditon");
+    J= 1; K= 0;
+    #20;
+    $display("------------------------------");
+    
+    $display("Verification of 11 conditon");
+    J= 1; K= 1;
+    #40;
+    $display("------------------------------");
+    
+    $display("Verification of 00 conditon");
+    J= 0; K= 0;
+    #25;
+    $display("------------------------------");
+
+    $display("Verification of 01 conditon");
+    J= 0; K= 1;
+    #15;
+    $display("------------------------------");
+    
+    $display("Verification of 11 conditon");
+    J= 1; K= 1;
+    #40;
+    $display("------------------------------");
+    
+    $finish;
+end 
+
+    
+initial
+  begin
+    $dumpfile("dump.vcd");
+    $dumpvars(1);
+ end
+  
+initial
+  $monitor("simtime = %g, CLK = %b, J = %b, K = %b, Qm = %b, QmBAR= %b, Qs = %b, QsBAR = %b", $time, CLK, J, K, x, y, Q, QBAR);
+endmodule
